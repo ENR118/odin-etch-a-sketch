@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: fit-content;
+            border: 5px solid black;
+        }
+
+        #container>div {
+            flex-basis: auto;
+        }
+
+        #container>div>div {
+            flex: 1;
+            width: 5px;
+            height: 5px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <button id="grid-button">NEW GRID</button>
+
+    <script>
+        const grid_container = document.getElementById("container");
+        const grid_button = document.getElementById("grid-button");
+
+        let grid_size = 16;
+
+        function generate_grid(grid_size) {
+            for (let i = 0; i < grid_size; i++) {
+                const grid_col = document.createElement("div");
+
+                for (let j = 0; j < grid_size; j++) {
+                    const grid_div = document.createElement("div");
+
+                    grid_div.addEventListener("mouseover", function (e) {
+                        // e.target.style.backgroundColor = "black";
+                        e.target.style.backgroundColor = "rgb(" + (Math.random() * 255) + "," + (Math.random() * 255) + ","  + (Math.random() * 255) + ")";
+                    })
+
+                    grid_col.appendChild(grid_div);
+                }
+
+                grid_container.appendChild(grid_col);
+            }
+        }
+
+        grid_button.addEventListener("click", function(e) {
+            grid_size = prompt("Please enter new grid size (max: 100): ");
+            
+            // delete old grid contents
+            while (grid_container.firstChild) {
+                grid_container.firstChild.remove();
+            }
+            
+            generate_grid(grid_size);
+        })
+
+        generate_grid(grid_size);
+    </script>
+</body>
+</html>
